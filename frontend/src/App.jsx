@@ -6,7 +6,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import DynamicPage from "./pages/DynamicPage.jsx";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -20,11 +21,15 @@ export default function App() {
         },
         {
           path: "login",
-          element: <Login />, // Login component at "/login"
+          element: <ProtectedRoute element={<Login />} redirectTo={"/"} />,
         },
         {
           path: "signup",
-          element: <Signup />, // Signup component at "/signup"
+          element: <ProtectedRoute element={<Signup />} redirectTo={"/"} />,
+        },
+        {
+          path: "watch/:contentType/:id",
+          element: <DynamicPage />,
         },
       ],
     },
@@ -32,8 +37,8 @@ export default function App() {
 
   return (
     <>
-    <ToastContainer position="bottom-right" />
-    <RouterProvider router={router}></RouterProvider>
-  </>
+      <ToastContainer position="bottom-right" />
+      <RouterProvider router={router}></RouterProvider>
+    </>
   );
 }

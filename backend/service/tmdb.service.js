@@ -1,7 +1,8 @@
 import axios from "axios";
 import customError from "../utils/error.js";
 
-const TMDB_TOKEN = process.env.TMBD_TOKEN;
+const TMDB_TOKEN =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmYwZmJkZjE4NWY2NzZjYTEyZjQwMjFjMDczMzdiNyIsInN1YiI6IjY2MzVlNjlkZTkyZDgzMDEyN2QzMWJiMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Bik4urvJd0SXlot4xbkTj7q25wq_XDhIvZWaGykqetA";
 
 const instance = axios.create({
   baseURL: "https://api.themoviedb.org/3",

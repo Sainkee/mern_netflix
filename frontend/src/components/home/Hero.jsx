@@ -9,7 +9,6 @@ export default function Hero() {
     (state) => state.authenication.isAuthenticated
   );
 
-  console.log(isLoggedIn);
 
   return <>{isLoggedIn ? <InHome /> : <Home />}</>;
 }

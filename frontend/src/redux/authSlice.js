@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   isAuthenticated: false,
+  contentType: "movie",
 };
 
 export const authenticationSlice = createSlice({
@@ -17,9 +18,13 @@ export const authenticationSlice = createSlice({
       state.user = "";
       state.isAuthenticated = false;
     },
+    setContentType: (state, action) => {
+      state.contentType = action.payload;
+    },
   },
 });
 
-export const { loginUser, logoutUser } = authenticationSlice.actions;
+export const { loginUser, logoutUser, setContentType } =
+  authenticationSlice.actions;
 
 export default authenticationSlice;

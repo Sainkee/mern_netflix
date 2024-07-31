@@ -35,7 +35,7 @@ export default function Signup() {
     try {
       const result = await login(userData).unwrap();
 
-      toast.success("Successfully signed up!");
+      toast.success("Successfully logged In!");
 
       await dispatch(loginUser(result.user)); // Dispatch login action if user should be logged in immediately
 

@@ -19,7 +19,7 @@ export default function Home() {
   };
 
   return (
-    <div className="  mx-auto hero_bg  w-full">
+    <div className="  mx-auto hero_bg h-screen w-full">
       <header className="max-w-6xl flex  p-4 justify-between items-center mx-auto ">
         <Link to="/">
           <img
@@ -30,7 +30,7 @@ export default function Home() {
         </Link>
         <Link
           className="bg-red-600 text-white py-2 px-4 rounded-md"
-          to="/signup"
+          to="/login"
         >
           Sing In
         </Link>

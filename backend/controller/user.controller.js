@@ -101,8 +101,8 @@ export const loginUser = async (req, res, next) => {
     );
 
     const cookieOption = {
-      secure: process.env.NODE_ENV === "production", //Ensures cookies are only sent over HTTPS connections. if true
-      httpOnly: true, //XSS (Cross-Site Scripting) attacks.
+      secure: false, //Ensures cookies are only sent over HTTPS connections. if true
+      httpOnly: false, //XSS (Cross-Site Scripting) attacks.
     };
     res
       .status(200)
@@ -130,13 +130,13 @@ export const logoutUser = async (req, res) => {
     );
     const cookieOption = {
       secure: false,
-      httpOnly: true,
+      httpOnly: false, //XSS (Cross-Site Scripting) attacks
     };
 
     return res
       .status(200)
-      .clearCookie("accessToken", cookieOption)
-      .clearCookie("refreshToken", cookieOption)
+      .clearCookie("accessToken",{path:"/"}, cookieOption)
+      .clearCookie("refreshToken", {path:"/"}, cookieOption)
       .json({ message: "user logged out" });
   } catch (error) {
     next(new customError("something went wrong" || error.message, 500));
@@ -172,7 +172,7 @@ export const refreshAccessToken = async (req, res, next) => {
 
     const cookieOption = {
       secure: false,
-      httpOnly: true,
+      httpOnly: false,
     };
 
     const { accessToken, refreshToken: newRefreshToken } =
