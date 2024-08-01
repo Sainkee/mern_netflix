@@ -8,6 +8,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import DynamicPage from "./pages/DynamicPage.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import SeachHistory from "./pages/SeachHistory.jsx";
+import SearchPage from "./pages/SearchPage.jsx";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -31,7 +34,19 @@ export default function App() {
           path: "watch/:contentType/:id",
           element: <DynamicPage />,
         },
+        {
+          path: "/history",
+          element: <SeachHistory />,
+        },
+        {
+          path: "/search",
+          element: <SearchPage />,
+        },
       ],
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
 

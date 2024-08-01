@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../redux/apiSlice";
 import { logoutUser, setContentType } from "../../redux/authSlice";
 import { useState } from "react";
-import { AlignRight, LogOut } from "lucide-react";
+import { AlignRight, LogOut, Search } from "lucide-react";
 
 export default function Navbar() {
   const contentType = useSelector((state) => state.authenication.contentType);
@@ -32,13 +32,16 @@ export default function Navbar() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     dispatch(setContentType(tab));
-    navigate("/");
+    if (tab === "movie" || tab === "tv") {
+      navigate("/");
+    }
   };
 
   return (
-    <div className=" text-white py-4 ">
-      <div className="flex  gap-5 justify-between items-center max-w-7xl mx-auto ">
-        <NavLink to="/" className="flex items-center">
+    <div className=" text-white py-4 px-4   mx-auto">
+      <div className="flex  gap-5 justify-between items-center  mx-auto ">
+        <NavLink onClick={()=>handleTabClick("movie")} to="/" className="flex items-center">
+          
           <img
             src="/netflix-logo.png"
             alt="Netflix Logo"
@@ -69,8 +72,9 @@ export default function Navbar() {
             </button>
             <NavLink
               to="/history"
-              className={({ isActive }) =>
-                isActive
+              onClick={() => handleTabClick("history")}
+              className={
+                activeTab === "history"
                   ? "text-red-600 underline"
                   : "text-white hover:underline"
               }
@@ -80,6 +84,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex gap-3  justify-end w-full items-center">
+            <Search size={34} className="hover:cursor-pointer  " onClick={() => navigate("/search")} />
             <img
               className="rounded-full h-8 w-8 sm:h-10 sm:w-10 border-2 border-white object-cover shadow-md"
               src={userProfile}

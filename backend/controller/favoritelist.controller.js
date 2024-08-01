@@ -2,7 +2,6 @@ import User from "../model/user.model.js";
 import fetchData from "../service/tmdb.service.js";
 import customError from "../utils/error.js";
 
-
 // Add an item to the favorite list
 export const addToFavorites = async (req, res, next) => {
   const userId = req.user._id;
@@ -15,8 +14,6 @@ export const addToFavorites = async (req, res, next) => {
     if (isFavorite) {
       throw new customError("item already in favorites", 400);
     }
-
-    
 
     await User.findByIdAndUpdate(
       userId,
@@ -33,8 +30,13 @@ export const addToFavorites = async (req, res, next) => {
       },
       { new: true }
     );
+    const updatedUser = await User.findById(userId);
 
-    res.status(200).json({ success: true, message: "Added to favorites" });
+    res.status(200).json({
+      success: true,
+      favorites: updatedUser.favorites,
+      message: "Added to favorites",
+    });
   } catch (error) {
     next(error);
   }
@@ -56,7 +58,15 @@ export const removeFromFavorites = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(200).json({ success: true, message: "Removed from favorites" });
+    const updatedUser = await User.findById(userId);
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Removed from favorites",
+        content: updatedUser.favorites,
+      });
   } catch (error) {
     next(error);
   }
