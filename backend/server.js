@@ -17,11 +17,17 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-const corsOptions = {
-  origin: "https://mern-netflix-xi.vercel.app/", // Frontend URL
-  credentials: true, // Allow credentials (cookies)
-};
-app.use(cors(corsOptions));
+
+const allowedOrigin = "https://mern-netflix-xi.vercel.app";
+
+// CORS configuration
+app.use(
+  cors({
+    origin: allowedOrigin,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(cookieParser());
 
