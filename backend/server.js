@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 const corsOptions = {
-  origin: "http://localhost:5173", // Frontend URL
+  origin: "https://mern-netflix-xi.vercel.app/", // Frontend URL
   credentials: true, // Allow credentials (cookies)
 };
 app.use(cors(corsOptions));

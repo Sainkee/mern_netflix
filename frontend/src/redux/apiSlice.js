@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const backendApiSlice = createApi({
   reducerPath: "backendApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000",
+    baseUrl: "https://mern-netflix-k7rp.onrender.com",
     credentials: "include",
     mode: "cors",
   }),
