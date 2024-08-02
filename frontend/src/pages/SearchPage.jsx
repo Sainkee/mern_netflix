@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useSearchContentMutation } from "../redux/apiSlice";
+import { useState } from "react";
+import { useLazySearchContentQuery } from "../redux/apiSlice";
 import { Search } from "lucide-react";
 import Navbar from "../components/layout/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { SMALL_IMG_BASE_URL } from "../../utils/constant";
 
 export default function SearchPage() {
-  const [searchContent, { isLoading, error }] = useSearchContentMutation();
+  const [searchContent, { isLoading, error }] = useLazySearchContentQuery();
   const [contentType, setContentType] = useState("movie");
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -15,23 +15,21 @@ export default function SearchPage() {
 
   const handleQueryChange = (e) => setQuery(e.target.value);
 
-  useEffect(() => {
-    const temp = async () => {
-      if (!query.trim()) {
-        return;
-      }
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!query.trim()) {
+      return;
+    }
 
-      try {
-        console.log("Starting search with query:", query);
-        const res = await searchContent({ query, contentType }).unwrap();
-        console.log("Search results:", res.content);
-        setSearchResults(res.content);
-      } catch (error) {
-        console.error("Search error:", error);
-      }
-    };
-    temp();
-  }, [query]);
+    try {
+      console.log("Starting search with query:", query);
+      const res = await searchContent({ query, contentType }).unwrap();
+      console.log("Search results:", res.content);
+      setSearchResults(res.content);
+    } catch (error) {
+      console.error("Search error:", error);
+    }
+  };
 
   return (
     <div className="bg-black min-h-screen text-white">
@@ -48,7 +46,7 @@ export default function SearchPage() {
             : "TV Shows"}
         </h1>
 
-        <form className="flex gap-2 items-center justify-center mb-8">
+        <form className="flex gap-2 items-center justify-center mb-8" onSubmit={handleSearch}>
           <input
             type="text"
             autoFocus
@@ -62,7 +60,6 @@ export default function SearchPage() {
           <button
             type="submit"
             className="bg-red-600 hover:bg-red-700 text-white p-2 rounded flex items-center"
-            onClick={(e) => e.preventDefault()} // Prevent form submission
           >
             <Search className="mr-2" />
             Search

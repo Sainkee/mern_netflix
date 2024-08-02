@@ -3,11 +3,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const backendApiSlice = createApi({
   reducerPath: "backendApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://mern-netflix-xi.vercel.app",
+    baseUrl: "https://mern-netflix-k7rp.onrender.com",
     credentials: "include",
     mode: "cors",
   }),
-  tagTypes: ["UserFavorite", "UserSearchHistory"], // Custom tag types
+  tagTypes: ["UserFavorite", "UserSearchHistory"],
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (userData) => ({
@@ -92,7 +92,7 @@ export const backendApiSlice = createApi({
       }),
       invalidatesTags: ["UserSearchHistory"], // Invalidate the relevant query
     }),
-    searchContent: builder.mutation({
+    searchContent: builder.query({
       query: ({ contentType, query }) => ({
         url: `/v1/search/${contentType}/${query}`,
         method: "GET",
@@ -115,5 +115,5 @@ export const {
   useRemoveFromFavoriteMutation,
   useGetSearchHistoryQuery,
   useDeleteSearchHistoryMutation,
-  useSearchContentMutation,
+  useLazySearchContentQuery,
 } = backendApiSlice;

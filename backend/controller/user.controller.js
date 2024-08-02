@@ -102,7 +102,8 @@ export const loginUser = async (req, res, next) => {
 
     const cookieOption = {
       secure: true, //Ensures cookies are only sent over HTTPS connections. if true
-      httpOnly: true, //XSS (Cross-Site Scripting) attacks.
+      httpOnly: true,
+      sameSite:"none" //XSS (Cross-Site Scripting) attacks.
     };
     res
       .status(200)
