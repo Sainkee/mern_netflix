@@ -107,8 +107,8 @@ export const loginUser = async (req, res, next) => {
     };
     res
       .status(200)
-      .cookie("accessToken", accessToken, cookieOption)
-      .cookie("refreshToken", refreshToken, cookieOption)
+      .cookie("accessToken", accessToken, { path: "/" }, cookieOption)
+      .cookie("refreshToken", refreshToken, { path: "/" }, cookieOption)
       .json({
         user: loggedInUser,
         message: "user login successfully",
