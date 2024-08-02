@@ -37,7 +37,7 @@ app.use("/v1/user", userRouter);
 app.use("/v1/movie", movieRouter);
 app.use("/v1/tv", tvRouter);
 app.use("/v1/favorite", favoriteRouter);
-app.use("/v1/search/", searchRouter);
+app.use("/v1/search", searchRouter);
 
 app.use(errorHandlingMiddleware);
 
