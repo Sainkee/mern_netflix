@@ -116,20 +116,26 @@ export default function Navbar() {
         } sm:hidden bg-black  text-white py-4 absolute top-16  left-0 w-full z-50`}
       >
         <div className="flex flex-col gap-4 px-8 py-5 items-start">
-          <NavLink
-            to="/movies"
-            className="text-white text-lg hover:underline"
+          <button
               onClick={() => handleTabClick("movie")}
-          >
-            Movies
-          </NavLink>
-          <NavLink
-            to="/tv-shows"
-            className="text-white text-lg hover:underline"
+              className={
+                activeTab === "movie"
+                  ? "text-red-600 underline"
+                  : "text-white hover:underline"
+              }
+            >
+              Movies
+            </button>
+            <button
               onClick={() => handleTabClick("tv")}
-          >
-            TV Shows
-          </NavLink>
+              className={
+                activeTab === "tv"
+                  ? "text-red-600 underline"
+                  : "text-white hover:underline"
+              }
+            >
+              TV Shows
+            </button>
           <NavLink
             to="/history"
             className="text-white text-lg hover:underline"
