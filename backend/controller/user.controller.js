@@ -103,12 +103,12 @@ export const loginUser = async (req, res, next) => {
     const cookieOption = {
       secure: true, //Ensures cookies are only sent over HTTPS connections. if true
       httpOnly: true,
-      sameSite:"none" //XSS (Cross-Site Scripting) attacks.
+      sameSite: "none", //XSS (Cross-Site Scripting) attacks.
     };
     res
       .status(200)
-      .cookie("accessToken", accessToken, { path: "/" }, cookieOption)
-      .cookie("refreshToken", refreshToken, { path: "/" }, cookieOption)
+      .cookie("accessToken", accessToken,  cookieOption)
+      .cookie("refreshToken", refreshToken,  cookieOption)
       .json({
         user: loggedInUser,
         message: "user login successfully",
@@ -137,8 +137,8 @@ export const logoutUser = async (req, res) => {
 
     return res
       .status(200)
-      .clearCookie("accessToken", { path: "/" }, cookieOption)
-      .clearCookie("refreshToken", { path: "/" }, cookieOption)
+      .clearCookie("accessToken",  cookieOption)
+      .clearCookie("refreshToken",  cookieOption)
       .json({ message: "user logged out" });
   } catch (error) {
     next(new customError("something went wrong" || error.message, 500));
