@@ -21,6 +21,7 @@ export default function Navbar() {
     try {
       await logoutApi().unwrap();
       dispatch(logoutUser());
+      navigate("/")
     } catch (error) {
       console.error("Logout failed: ", error);
     }
@@ -35,6 +36,7 @@ export default function Navbar() {
     if (tab === "movie" || tab === "tv") {
       navigate("/");
     }
+    setMenuOpen(!menuOpen);
   };
 
   return (
@@ -117,21 +119,21 @@ export default function Navbar() {
           <NavLink
             to="/movies"
             className="text-white text-lg hover:underline"
-            onClick={handleMenuToggle}
+              onClick={() => handleTabClick("movie")}
           >
             Movies
           </NavLink>
           <NavLink
             to="/tv-shows"
             className="text-white text-lg hover:underline"
-            onClick={handleMenuToggle}
+              onClick={() => handleTabClick("tv")}
           >
             TV Shows
           </NavLink>
           <NavLink
             to="/history"
             className="text-white text-lg hover:underline"
-            onClick={handleMenuToggle}
+            onClick={() => handleTabClick("history")}
           >
             Search History
           </NavLink>
