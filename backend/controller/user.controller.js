@@ -131,6 +131,7 @@ export const logoutUser = async (req, res) => {
     const cookieOption = {
       secure: true,
       httpOnly: true, //XSS (Cross-Site Scripting) attacks
+      sameSite: "None",
     };
 
     return res
@@ -173,6 +174,7 @@ export const refreshAccessToken = async (req, res, next) => {
     const cookieOption = {
       secure: false,
       httpOnly: false,
+      sameSite: "None",
     };
 
     const { accessToken, refreshToken: newRefreshToken } =

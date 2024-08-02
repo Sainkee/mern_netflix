@@ -22,7 +22,9 @@ export default function SearchPage() {
       }
 
       try {
+        console.log("Starting search with query:", query);
         const res = await searchContent({ query, contentType }).unwrap();
+        console.log("Search results:", res.content);
         setSearchResults(res.content);
       } catch (error) {
         console.error("Search error:", error);
@@ -55,11 +57,12 @@ export default function SearchPage() {
             placeholder={`Search for ${
               contentType === "person" ? "people" : contentType
             }`}
-            className="w-full  max-w-lg p-2 rounded bg-gray-800 text-white"
+            className="w-full max-w-lg p-2 rounded bg-gray-800 text-white"
           />
           <button
             type="submit"
             className="bg-red-600 hover:bg-red-700 text-white p-2 rounded flex items-center"
+            onClick={(e) => e.preventDefault()} // Prevent form submission
           >
             <Search className="mr-2" />
             Search
@@ -100,7 +103,7 @@ export default function SearchPage() {
           </p>
         )}
         {searchResults.length > 0 && (
-          <div className="max-w-7xl  mx-auto">
+          <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl mb-4 font-semibold text-center">
               Search Results for "{query}"
             </h2>
