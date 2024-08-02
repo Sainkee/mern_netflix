@@ -5,7 +5,6 @@ export const backendApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://mern-netflix-k7rp.onrender.com",
     credentials: "include",
-    mode: "cors",
   }),
   tagTypes: ["UserFavorite", "UserSearchHistory"],
   endpoints: (builder) => ({
