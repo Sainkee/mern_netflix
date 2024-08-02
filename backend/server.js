@@ -23,8 +23,12 @@ app.use(express.json());
 
 
 app.use(cookieParser());
+const corsOptions = {
+  origin: "https://mern-netflix-sepia.vercel.app", // Your frontend URL
+  credentials: true, // Allow cookies and other credentials
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 4000;
 
