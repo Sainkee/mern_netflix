@@ -2,6 +2,14 @@ import customError from "../utils/error.js";
 import User from "../model/user.model.js";
 import cloudinaryUpload from "../utils/cloudinary.js";
 import fs from "fs";
+
+const cookieOption = {
+  secure: true,
+  httpOnly: true, //XSS (Cross-Site Scripting) attacks
+  sameSite: "Lax", 
+  path: "/",
+};
+
 const generateAccessandRefreshToken = async (userId) => {
   try {
     const user = await User.findById({ _id: userId });
@@ -100,16 +108,10 @@ export const loginUser = async (req, res, next) => {
       "-password -refreshToken"
     );
 
-    const cookieOption = {
-      secure: true, //Ensures cookies are only sent over HTTPS connections. if true
-      httpOnly: true,
-      sameSite: "none", 
-      path: "/",
-    };
     res
       .status(200)
-      .cookie("accessToken", accessToken,  cookieOption)
-      .cookie("refreshToken", refreshToken,  cookieOption)
+      .cookie("accessToken", accessToken, cookieOption)
+      .cookie("refreshToken", refreshToken, cookieOption)
       .json({
         user: loggedInUser,
         message: "user login successfully",
@@ -130,17 +132,11 @@ export const logoutUser = async (req, res) => {
       { $unset: { refreshToken: 1 } },
       { new: true }
     );
-    const cookieOption = {
-      secure: true,
-      httpOnly: true, //XSS (Cross-Site Scripting) attacks
-      sameSite: "None",
-      path: "/",
-    };
 
     return res
       .status(200)
-      .clearCookie("accessToken",  cookieOption)
-      .clearCookie("refreshToken",  cookieOption)
+      .clearCookie("accessToken", cookieOption)
+      .clearCookie("refreshToken", cookieOption)
       .json({ message: "user logged out" });
   } catch (error) {
     next(new customError("something went wrong" || error.message, 500));
@@ -173,12 +169,6 @@ export const refreshAccessToken = async (req, res, next) => {
         401
       );
     }
-
-    const cookieOption = {
-      secure: false,
-      httpOnly: false,
-      sameSite: "None",
-    };
 
     const { accessToken, refreshToken: newRefreshToken } =
       await generateAccessandRefreshToken(user._id);
