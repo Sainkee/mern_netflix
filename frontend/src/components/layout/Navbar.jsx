@@ -10,9 +10,10 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(contentType);
   const navigate = useNavigate();
-  const userProfile = useSelector(
-    (state) => state.authenication.user.userprofile
+ const userProfile = useSelector(
+    (state) => state?.authenication?.user?.userprofile
   );
+  
 
   const [logoutApi] = useLogoutMutation();
   const dispatch = useDispatch();
