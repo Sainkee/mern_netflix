@@ -22,24 +22,25 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-// const corsOptions = {
-//   origin: "https://mern-netflix-sepia.vercel.app",
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: "https://mern-netflix-sepia.vercel.app",
+  credentials: true,
+};
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      const allowedOrigins =" https://mern-netflix-sepia.vercel.app";
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('CORS policy violation'));
-      }
-    },
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       const allowedOrigins =" https://mern-netflix-sepia.vercel.app";
+//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('CORS policy violation'));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
+app.use(cors(corsOption));
 
 const PORT = process.env.PORT || 4000;
 
