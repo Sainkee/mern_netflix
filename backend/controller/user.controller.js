@@ -6,7 +6,7 @@ import fs from "fs";
 const cookieOption = {
   secure: true,
   httpOnly: true, //XSS (Cross-Site Scripting) attacks
-  sameSite: "Lax", 
+  sameSite: "None", 
   path: "/",
 };
 
