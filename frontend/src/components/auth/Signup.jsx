@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSignUpMutation } from "../../redux/apiSlice";
+import { useLoginMutation, useSignUpMutation } from "../../redux/apiSlice";
 import { toast } from "react-toastify";
 import { loginUser } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
@@ -40,13 +40,15 @@ export default function Signup() {
       formData.append("password", password);
       formData.append("profile", profileImage);
 
-      const result = await signUp(formData).unwrap();
+      await signUp(formData).unwrap();
+
+      const result = await login({ email, password }).unwrap();
 
       toast.success("Successfully signed up!");
-      await dispatch(loginUser(result.createdUser));
+
+      dispatch(loginUser(result.user));
 
       navigate("/", { replace: true });
-
       setEmail("");
       setUsername("");
       setPassword("");
