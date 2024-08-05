@@ -33,38 +33,48 @@ export default function Signup() {
       return;
     }
 
-    try {
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("username", username);
-      formData.append("password", password);
-      formData.append("profile", profileImage);
+   try {
+  // Create FormData object
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("username", username);
+  formData.append("password", password);
+  formData.append("profile", profileImage);
 
-      await signUp(formData).unwrap();
+  // Sign up the user
+  await signUp(formData).unwrap();
 
-      const result = await login({ email, password }).unwrap();
+  // Log in the user
+  const result = await login({ email, password }).unwrap();
 
-      toast.success("Successfully signed up!");
+  // Show success message
+  toast.success("Successfully signed up!");
 
-      dispatch(loginUser(result.user));
+ 
+  dispatch(loginUser(result.user));
 
-      navigate("/", { replace: true });
-      setEmail("");
-      setUsername("");
-      setPassword("");
-      setProfileImage(null);
-    } catch (err) {
-      if (err.status === 409) {
-        // Handling specific error case for user already existing
-        toast.error(err.data.message);
-        navigate("/login?email=" + email);
-      } else {
-        // Handling other errors
-        toast.error("Failed to sign up. Please try again.");
-      }
-      console.error("Failed to sign up:", err);
-    }
-  };
+  // Navigate to the home page
+  navigate("/", { replace: true });
+
+  // Reset form fields and profile image
+  setEmail("");
+  setUsername("");
+  setPassword("");
+  setProfileImage(null);
+
+} catch (err) {
+  // Handle errors
+  if (err.status === 409) {
+    // Specific error case for user already existing
+    toast.error(err.data.message);
+    navigate("/login?email=" + email);
+  } else {
+    // Other errors
+    toast.error("Failed to sign up. Please try again.");
+  }
+  console.error("Failed to sign up:", err);
+}
+
 
   return (
     <div className="hero_bg h-screen w-full flex flex-col justify-center items-center text-white">
