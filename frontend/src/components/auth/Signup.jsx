@@ -51,7 +51,7 @@ export default function Signup() {
   toast.success("Successfully signed up!");
 
  
-  dispatch(loginUser(result.user));
+ await dispatch(loginUser(result.user));
 
   // Navigate to the home page
   navigate("/", { replace: true });
