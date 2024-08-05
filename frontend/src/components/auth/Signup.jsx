@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLoginMutation, useSignUpMutation } from "../../redux/apiSlice";
 import { toast } from "react-toastify";
 import { loginUser } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
 
 export default function Signup() {
-  // Extract email from query parameters (if provided) to pre-fill the email field.
-  const { searchParams } = new URL(document.location);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const emailValue = searchParams.get("email");
 
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null); // State for profile image
   const [signUp, { isLoading }] = useSignUpMutation();
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -33,48 +34,47 @@ export default function Signup() {
       return;
     }
 
-   try {
-  // Create FormData object
-  const formData = new FormData();
-  formData.append("email", email);
-  formData.append("username", username);
-  formData.append("password", password);
-  formData.append("profile", profileImage);
+    try {
+      // Create FormData object
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("username", username);
+      formData.append("password", password);
+      formData.append("profile", profileImage);
 
-  // Sign up the user
-  await signUp(formData).unwrap();
+      // Sign up the user
+      await signUp(formData).unwrap();
 
-  // Log in the user
-  const result = await login({ email, password }).unwrap();
+      // Log in the user
+      const result = await login({ email, password }).unwrap();
 
-  // Show success message
-  toast.success("Successfully signed up!");
+      // Show success message
+      toast.success("Successfully signed up!");
 
- 
- await dispatch(loginUser(result.user));
+      await dispatch(loginUser(result.user));
 
-  // Navigate to the home page
-  navigate("/", { replace: true });
+      // Navigate to the home page
+      navigate("/", { replace: true });
 
-  // Reset form fields and profile image
-  setEmail("");
-  setUsername("");
-  setPassword("");
-  setProfileImage(null);
+      // Reset form fields and profile image
+      setEmail("");
+      setUsername("");
+      setPassword("");
+      setProfileImage(null);
 
-} catch (err) {
-  // Handle errors
-  if (err.status === 409) {
-    // Specific error case for user already existing
-    toast.error(err.data.message);
-    navigate("/login?email=" + email);
-  } else {
-    // Other errors
-    toast.error("Failed to sign up. Please try again.");
-  }
-  console.error("Failed to sign up:", err);
-}
-
+    } catch (err) {
+      // Handle errors
+      if (err.status === 409) {
+        // Specific error case for user already existing
+        toast.error(err.data.message);
+        navigate("/login?email=" + email);
+      } else {
+        // Other errors
+        toast.error("Failed to sign up. Please try again.");
+      }
+      console.error("Failed to sign up:", err);
+    }
+  };
 
   return (
     <div className="hero_bg h-screen w-full flex flex-col justify-center items-center text-white">
@@ -181,5 +181,4 @@ export default function Signup() {
       </div>
     </div>
   );
-}
 }
