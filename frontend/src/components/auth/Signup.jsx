@@ -105,6 +105,7 @@ export default function Signup() {
                 <input
                   type="text"
                   id="username"
+                  autoFocus
                   name="username"
                   value={username}
                   onChange={handleChange}
