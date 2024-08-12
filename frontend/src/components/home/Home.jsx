@@ -32,7 +32,7 @@ export default function Home() {
           className="bg-red-600 text-white py-2 px-4 rounded-md"
           to="/login"
         >
-          Sing In
+          Sign In
         </Link>
       </header>
 
